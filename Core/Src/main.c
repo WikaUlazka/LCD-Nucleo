@@ -21,13 +21,11 @@
 #include "spi.h"
 #include "usart.h"
 #include "gpio.h"
-#include "font6x9.h"
-#include "hagl_hal.h"
-#include "hagl.h"
 
-extern SPI_HandleTypeDef hspi1;
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "st7735.h"
+#include "fonts.h"
 
 /* USER CODE END Includes */
 
@@ -38,7 +36,8 @@ extern SPI_HandleTypeDef hspi1;
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define YMAX 5000
+#define YMIN 0
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -69,6 +68,7 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -96,47 +96,69 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  ST7735_Init();
+  ST7735_FillScreen(ST7735_BLACK);
+
+  int16_t x = 1;
+  int16_t y = 7;
+  const char* text = "Wiktoria Ulazka - Aleksandra Janczarek - Natalia Moczydlowska - ";
+  int16_t offset = 0;
+
+  while(1) {
+	  offset += 1;
+
+	  const char* pt = text;
+
+	  if(y>15) return 0;
+	      while(*pt){
+	        ST7735_DrawCharS(x*6 + offset, y*10, *pt, ST7735_GREEN, ST7735_BLACK, 1);
+	        pt++;
+	        x = x+1;
+	    }
+	  HAL_Delay(1);
+  }
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  lcd_init();
+//  lcd_init();
+//
+//  // Wyczyść ekran
+//  hagl_fill_rectangle(0, 0, 160, 128, 0x0000);  // Tło czarne
+//  lcd_copy();
+//
+//  int x = 0;  // Pozycja tekstu na ekranie
+//
+//  // Przesuwanie tekstu w nieskończonej pętli
+//  while (1)
+//  {
+//    // Sprawdzenie, czy ekran jest gotowy
+//    while (lcd_is_busy()) {}
+//
+//    // Przesuwanie tekstu
+//    // x++;  // Zwiększanie pozycji
+//    // if (x > 160) {  // Jeśli tekst wyjdzie poza ekran, resetuj pozycję
+//    //   x = -160;
+//    // }
+//
+//    // Wyczyść ekran
+//    hagl_fill_rectangle(0, 0, 160, 128, 0x0000);
+//
+//    // Wyświetlanie imion i nazwisk
+//    // hagl_put_text(L"Jan Kowalski", x, 55, 0xFFFF, font6x9);
+//    // hagl_put_text(L"Anna Nowak", x, 75, 0xFFFF, font6x9);
+//
+//    // Kopiowanie zawartości do LCD
+//    lcd_copy();
+//
+//    // Opóźnienie, aby tekst poruszał się płynnie
+//    HAL_Delay(20);
+//  }
+    /* USER CODE END WHILE */
 
-  // Wyczyść ekran
-  hagl_fill_rectangle(0, 0, 160, 128, 0x0000);  // Tło czarne
-  lcd_copy();
-
-  int x = 0;  // Pozycja tekstu na ekranie
-
-  // Przesuwanie tekstu w nieskończonej pętli
-  while (1)
-  {
-    // Sprawdzenie, czy ekran jest gotowy
-    while (lcd_is_busy()) {}
-
-    // Przesuwanie tekstu
-    // x++;  // Zwiększanie pozycji
-    // if (x > 160) {  // Jeśli tekst wyjdzie poza ekran, resetuj pozycję
-    //   x = -160;
-    // }
-
-    // Wyczyść ekran
-    hagl_fill_rectangle(0, 0, 160, 128, 0x0000);
-
-    // Wyświetlanie imion i nazwisk
-    // hagl_put_text(L"Jan Kowalski", x, 55, 0xFFFF, font6x9);
-    // hagl_put_text(L"Anna Nowak", x, 75, 0xFFFF, font6x9);
-
-    // Kopiowanie zawartości do LCD
-    lcd_copy();
-
-    // Opóźnienie, aby tekst poruszał się płynnie
-    HAL_Delay(20);
-  }
-  /* USER CODE END WHILE */
-
-  /* USER CODE BEGIN 3 */
-  /* Program never reaches here */
+    /* USER CODE BEGIN 3 */
+//  /* Program never reaches here */
   /* USER CODE END 3 */
 }
 
