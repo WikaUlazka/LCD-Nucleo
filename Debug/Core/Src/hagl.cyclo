@@ -1,0 +1,2 @@
+../Core/Src/hagl.c:6:6:hagl_fill_rectangle	3
+../Core/Src/hagl.c:15:6:hagl_put_text	5
