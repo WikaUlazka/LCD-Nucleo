@@ -54,12 +54,11 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int volatile speed = 1;
 /* USER CODE END 0 */
 
 /**
@@ -99,24 +98,44 @@ int main(void)
   ST7735_Init();
   ST7735_FillScreen(ST7735_BLACK);
 
-  int16_t x = 1;
-  int16_t y = 7;
-  const char* text = "Wiktoria Ulazka - Aleksandra Janczarek - Natalia Moczydlowska - ";
-  int16_t offset = 0;
+  int x = 50;
+  int y = 50;
+  int width = 30;
+  int height = 30;
 
-  while(1) {
-	  offset += 1;
+  int dx = 10;
+  int dy = -7;
 
-	  const char* pt = text;
+  ST7735_FillRectangle(x, y, width, height, ST7735_MAGENTA);
+  while (1) {
+    ST7735_FillRectangle(x, y, width, height, ST7735_BLACK);
 
-	  if(y>15) return 0;
-	      while(*pt){
-	        ST7735_DrawCharS(x*6 + offset, y*10, *pt, ST7735_GREEN, ST7735_BLACK, 1);
-	        pt++;
-	        x = x+1;
-	    }
-	  HAL_Delay(1);
-  }
+	x += dx * speed;
+	y += dy * speed;
+
+	if ( x > 90) dx = -dx;
+	if ( y < 10) dy = -dy;
+	if ( x < 10) dx = -dx;
+	if ( y > 120) dy = -dy;
+
+	ST7735_FillRectangle(x, y, width, height, ST7735_MAGENTA);
+	HAL_Delay(100);
+
+   }
+}
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	if (GPIO_Pin == USER_BUTTON_Pin) {
+		if (speed == 1) {
+			speed = 2;
+		} else {
+			speed = 1;
+		}
+	}
+}
+
+
+
+
 
   /* USER CODE END 2 */
 
@@ -160,7 +179,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 //  /* Program never reaches here */
   /* USER CODE END 3 */
-}
+//}
 
 /**
   * @brief System Clock Configuration
