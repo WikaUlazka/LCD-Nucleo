@@ -1,0 +1,16 @@
+../Core/Src/game.c:70:7:create_2d_box_array	32	static
+../Core/Src/game.c:87:6:free_2d_box_array	24	static
+../Core/Src/game.c:94:6:create_boxes	80	static
+../Core/Src/game.c:124:5:handle_input	16	static
+../Core/Src/game.c:137:5:ball_colide_with_box	24	static
+../Core/Src/game.c:179:5:ball_colide_with_paddle	16	static
+../Core/Src/game.c:202:5:powerup_colide_with_paddle	16	static
+../Core/Src/game.c:221:5:update	144	static
+../Core/Src/game.c:371:6:draw_box	24	static
+../Core/Src/game.c:384:6:draw_powerup	24	static
+../Core/Src/game.c:394:6:draw_ball	32	static
+../Core/Src/game.c:400:6:draw_paddle	32	static
+../Core/Src/game.c:409:6:draw	104	static
+../Core/Src/game.c:430:6:insert_score	48	static
+../Core/Src/game.c:449:6:save_score	152	static
+../Core/Src/game.c:471:5:game	144	dynamic

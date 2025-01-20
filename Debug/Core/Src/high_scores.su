@@ -1,0 +1,7 @@
+../Core/Src/high_scores.c:9:6:Flash_Write	56	static
+../Core/Src/high_scores.c:40:6:Flash_Read	32	static
+../Core/Src/high_scores.c:47:19:Flash_WriteArray	24	static
+../Core/Src/high_scores.c:54:6:Flash_ReadArray	24	static
+../Core/Src/high_scores.c:60:5:scores_handle_input	16	static
+../Core/Src/high_scores.c:79:6:scores_draw	200	static
+../Core/Src/high_scores.c:96:5:high_scores	16	static

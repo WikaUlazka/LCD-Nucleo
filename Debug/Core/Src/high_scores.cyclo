@@ -1,0 +1,7 @@
+../Core/Src/high_scores.c:9:6:Flash_Write	4
+../Core/Src/high_scores.c:40:6:Flash_Read	2
+../Core/Src/high_scores.c:47:19:Flash_WriteArray	1
+../Core/Src/high_scores.c:54:6:Flash_ReadArray	1
+../Core/Src/high_scores.c:60:5:scores_handle_input	3
+../Core/Src/high_scores.c:79:6:scores_draw	2
+../Core/Src/high_scores.c:96:5:high_scores	2

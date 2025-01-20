@@ -26,7 +26,9 @@
 /* USER CODE BEGIN Includes */
 #include "st7735.h"
 #include "fonts.h"
-
+#include "game.h"
+#include "menu.h"
+#include "high_scores.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,7 +60,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int volatile speed = 1;
 /* USER CODE END 0 */
 
 /**
@@ -96,90 +97,33 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   ST7735_Init();
-  ST7735_FillScreen(ST7735_BLACK);
 
-  int x = 50;
-  int y = 50;
-  int width = 30;
-  int height = 30;
+  // RESET SCORES
+//  uint64_t writeData[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+//  Flash_WriteArray(FLASH_USER_START_ADDR, writeData, 10);
+  // END RESET SCORES
 
-  int dx = 10;
-  int dy = -7;
-
-  ST7735_FillRectangle(x, y, width, height, ST7735_MAGENTA);
-  while (1) {
-    ST7735_FillRectangle(x, y, width, height, ST7735_BLACK);
-
-	x += dx * speed;
-	y += dy * speed;
-
-	if ( x > 90) dx = -dx;
-	if ( y < 10) dy = -dy;
-	if ( x < 10) dx = -dx;
-	if ( y > 120) dy = -dy;
-
-	ST7735_FillRectangle(x, y, width, height, ST7735_MAGENTA);
-	HAL_Delay(100);
-
-   }
-}
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	if (GPIO_Pin == USER_BUTTON_Pin) {
-		if (speed == 1) {
-			speed = 2;
-		} else {
-			speed = 1;
-		}
-	}
-}
-
-
-
-
-
+  int status = 0;
+  while(1)
+  {
+	  if (status == 0)
+	  {
+		  status = menu();
+	  }
+	  else if (status == 1)
+	  {
+		  status = game();
+	  }
+	  else if (status == 2)
+	  {
+		  status = high_scores();
+	  }
+  }
   /* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-//  lcd_init();
-//
-//  // Wyczyść ekran
-//  hagl_fill_rectangle(0, 0, 160, 128, 0x0000);  // Tło czarne
-//  lcd_copy();
-//
-//  int x = 0;  // Pozycja tekstu na ekranie
-//
-//  // Przesuwanie tekstu w nieskończonej pętli
-//  while (1)
-//  {
-//    // Sprawdzenie, czy ekran jest gotowy
-//    while (lcd_is_busy()) {}
-//
-//    // Przesuwanie tekstu
-//    // x++;  // Zwiększanie pozycji
-//    // if (x > 160) {  // Jeśli tekst wyjdzie poza ekran, resetuj pozycję
-//    //   x = -160;
-//    // }
-//
-//    // Wyczyść ekran
-//    hagl_fill_rectangle(0, 0, 160, 128, 0x0000);
-//
-//    // Wyświetlanie imion i nazwisk
-//    // hagl_put_text(L"Jan Kowalski", x, 55, 0xFFFF, font6x9);
-//    // hagl_put_text(L"Anna Nowak", x, 75, 0xFFFF, font6x9);
-//
-//    // Kopiowanie zawartości do LCD
-//    lcd_copy();
-//
-//    // Opóźnienie, aby tekst poruszał się płynnie
-//    HAL_Delay(20);
-//  }
-    /* USER CODE END WHILE */
+}
 
-    /* USER CODE BEGIN 3 */
-//  /* Program never reaches here */
-  /* USER CODE END 3 */
-//}
+
 
 /**
   * @brief System Clock Configuration
